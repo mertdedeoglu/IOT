@@ -1,0 +1,445 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IOT Project Template</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('greenhouse.jpg');
+            background-attachment: fixed;
+            border-radius: ('10px;');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .section {
+            background-color: transparent;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(242, 236, 236, 0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            transition: background-color 1s ease, box-shadow 1s ease;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .section-body {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: red;
+        }
+
+        .dropdown-container {
+            margin-bottom: 15px;
+        }
+
+        .dropdown-label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .dropdown {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .image-container {
+            margin-bottom: 20px;
+        }
+
+        .fan-image {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .icon {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 30px;
+            height: 30px;
+        }
+
+        .section:hover {
+            background-color: rgba(21, 20, 20, 0.2); /* Change background color on hover */
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5); /* Add box shadow on hover */
+        }
+
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center; color: white; background-color: #184b7e; padding: 10px;">Smart Greenhouse</h1>
+
+    <div class="container">
+        <div class="section" style="height: 220px;">
+            <img src="heat.png" alt="Icon 1" class="icon" style="height: 100px; width: 100px;">
+            <div class="section-title">Temprature</div>
+            <div id="Temprature" class="section-body">@ViewBag.Temprature</div>
+            <div class="dropdown-container">
+                <label for="Heat">Fan speed:</label>
+                <select id="heatselect" class="dropdown">
+                    <option value="low">Low</option>
+                    <option value="medium">Medium</option>
+                    <option value="high">High</option>
+                </select>
+            </div>
+            <Row>
+                <Col>
+                @*  <input type="button"
+                value="Isıyı Arttır"
+                onclick="location.href='@Url.Action("TempratureAction", "Home", new {Effect = document.getElementById,Action= "" } )'" /> *@
+                <button id="tempratureIncreaseButton">Increase The Temperature</button>
+                </Col>
+                <Col>
+                <button id="tempratureDecreaseButton">Decrease The Temperature</button>
+                </Col>
+                <Col>
+                <button id="tempratureOff">OFF</button>
+                </Col>
+            </Row>
+            <div class="image-container">
+                <img src="fan.png" alt="Fan Image" class="fan-image" style="height: 100px; width: 100px;">
+            </div>
+        </div>
+
+        <div class="section" style="height: 220px;">
+
+            <img src="moisture.png" alt="Icon 2" class="icon" style="height: 100px; width: 100px;">
+            <div class="section-title">Moisture</div>
+            <div id="Moisture" class="section-body">@ViewBag.Moisture</div>
+            <div class="dropdown-container">
+                <label for="moisture">Hydration Status:</label>
+                <select id="moistureselect" class="dropdown">
+                    <option value="low">30°</option>
+                    <option value="medium">60°</option>
+                    <option value="high">90°</option>
+                </select>
+            </div>
+            <Row>
+                <Col>
+                <button id="moistureWater">Water Your Plant</button>
+                </Col>
+                <Col>
+                <button id="moistureWaterOff">Stop Watering</button>
+                </Col>
+            </Row>
+            <div class="image-container">
+                <img src="watering.png" alt="Fan Image" class="fan-image" style="height: 100px; width: 100px;">
+            </div>
+        </div>
+
+        <div class="section" style="height: 220px;">
+            <img src="rain.png" alt="Icon 3" class="icon" style="height: 100px; width: 100px;">
+            <div class="section-title" font>Rain</div>
+            <div id="Rain" class="section-body">@ViewBag.Rain</div>
+            <div class="dropdown-container">
+                <label for="rain">opening speed:</label>
+                <select id="rainselect" class="dropdown">
+                    <option value="low">Low</option>
+                    <option value="medium">Medium</option>
+                    <option value="high">High</option>
+                </select>
+            </div>
+            <Row>
+                <Col><button id="roofOpen">Open The Roof</button></Col>
+                <Col><button id="roofClose">Close The Roof</button></Col>
+            </Row>
+            <div class="image-container">
+                <img src="cieling.png" alt="Fan Image" class="fan-image" style="height: 100px; width: 100px;">
+            </div>
+        </div>
+
+        <div class="section" style="height: 220px;">
+            <img src="sunshine.png" alt="Icon 4" class="icon" style="height: 100px; width: 100px;">
+            <div class="section-title">Light</div>
+            <div id="Light" class="section-body">@ViewBag.Light</div>
+            <div class="dropdown-container">
+                <label for="light">Light Intensity:</label>
+                <indi>
+                    <select id="lightselect" class="dropdown">
+                        <option value="low">Low</option>
+                        <option value="medium">Medium</option>
+                        <option value="high">High</option>
+                    </select>
+            </div>
+            <Row>
+                <Col><button id="lightOpen">Turn On The Light</button></Col>
+                <Col><button id="lightClose">Turn Off The Light</button></Col>
+            </Row>
+            <div class="image-container">
+                <img src="light.png" alt="Fan Image" class="fan-image" style="height: 100px; width: 100px;">
+            </div>
+        </div>
+
+    </div>
+    <script>
+        $(document).ready(function () {
+            $("#tempratureIncreaseButton").click(function () {
+                var selected = $("#heatselect").val();
+
+                $.ajax({
+                    url: '/Home/TempratureAction',
+                    type: 'GET',
+                    data: { effect: selected, actions: "1" },
+                    success: function (response) {
+                        console.log("response : ", response)
+                        // API'den gelen veriyi "veriAlani" adlı div içine yerleştiriyoruz
+                        // $('#Temprature').text(response);
+                        alert("Temperature successfully increasing!");
+                    },
+                    error: function () {
+                        console.error('Veri çekme hatası!');
+                    }
+                });
+            });
+
+            $("#tempratureDecreaseButton").click(function () {
+                var selected = $("#heatselect").val();
+
+                $.ajax({
+                    url: '/Home/TempratureAction',
+                    type: 'GET',
+                    data: { effect: selected, actions: "0" },
+                    success: function (response) {
+                        console.log("response : ", response)
+                        // API'den gelen veriyi "veriAlani" adlı div içine yerleştiriyoruz
+                        // $('#Temprature').text(response);
+                        alert("Temperature successfully decreasing!");
+                    },
+                    error: function () {
+                        console.error('Veri çekme hatası!');
+                    }
+                });
+            });
+            tempratureOff
+            $("#tempratureOff").click(function () {
+                var selected = "close";
+
+                $.ajax({
+                    url: '/Home/TempratureAction',
+                    type: 'GET',
+                    data: { effect: selected, actions: "2" },
+                    success: function (response) {
+                        console.log("response : ", response)
+                        // API'den gelen veriyi "veriAlani" adlı div içine yerleştiriyoruz
+                        // $('#Temprature').text(response);
+                        alert("Successfully closing!");
+                    },
+                    error: function () {
+                        console.error('Veri çekme hatası!');
+                    }
+                });
+            });
+
+            $("#moistureWater").click(function () {
+                var selected = $("#moistureselect").val();
+
+                $.ajax({
+                    url: '/Home/MoistureAction',
+                    type: 'GET',
+                    data: { effect: selected, actions: "1" },
+                    success: function (response) {
+                        console.log("response : ", response)
+                        // API'den gelen veriyi "veriAlani" adlı div içine yerleştiriyoruz
+                        // $('#Temprature').text(response);
+                        alert("Plant is successfully watering!");
+
+                    },
+                    error: function () {
+                        console.error('Veri çekme hatası!');
+                    }
+                });
+            });
+
+            $("#moistureWaterOff").click(function () {
+                var selected = "close";
+
+                $.ajax({
+                    url: '/Home/MoistureAction',
+                    type: 'GET',
+                    data: { effect: selected, actions: "0" },
+                    success: function (response) {
+                        console.log("response : ", response)
+                        // API'den gelen veriyi "veriAlani" adlı div içine yerleştiriyoruz
+                        // $('#Temprature').text(response);
+                        alert("Watering is successfully closing!");
+
+                    },
+                    error: function () {
+                        console.error('Veri çekme hatası!');
+                    }
+                });
+            });
+
+            $("#roofOpen").click(function () {
+                var selected = $("#rainselect").val();
+
+                $.ajax({
+                    url: '/Home/RainAction',
+                    type: 'GET',
+                    data: { effect: selected, actions: "1" },
+                    success: function (response) {
+                        console.log("response : ", response)
+                        // API'den gelen veriyi "veriAlani" adlı div içine yerleştiriyoruz
+                        // $('#Temprature').text(response);
+                        alert("Roof is successfully opening!");
+
+                    },
+                    error: function () {
+                        console.error('Veri çekme hatası!');
+                    }
+                });
+            });
+
+            $("#roofClose").click(function () {
+                var selected = $("#rainselect").val();
+
+                $.ajax({
+                    url: '/Home/RainAction',
+                    type: 'GET',
+                    data: { effect: selected, actions: "0" },
+                    success: function (response) {
+                        console.log("response : ", response)
+                        // API'den gelen veriyi "veriAlani" adlı div içine yerleştiriyoruz
+                        // $('#Temprature').text(response);
+                        alert("Roof is successfully closing!");
+
+                    },
+                    error: function () {
+                        console.error('Veri çekme hatası!');
+                    }
+                });
+            });
+
+            $("#lightOpen").click(function () {
+                var selected = $("#lightselect").val();
+
+                $.ajax({
+                    url: '/Home/LightAction',
+                    type: 'GET',
+                    data: { effect: selected, actions: "1" },
+                    success: function (response) {
+                        console.log("response : ", response)
+                        // API'den gelen veriyi "veriAlani" adlı div içine yerleştiriyoruz
+                        // $('#Temprature').text(response);
+                        alert("Light is successfully opening!");
+
+                    },
+                    error: function () {
+                        console.error('Veri çekme hatası!');
+                    }
+                });
+            });
+
+            $("#lightClose").click(function () {
+                var selected = $("#lightselect").val();
+
+                $.ajax({
+                    url: '/Home/LightAction',
+                    type: 'GET',
+                    data: { effect: selected, actions: "0" },
+                    success: function (response) {
+                        console.log("response : ", response)
+                        // API'den gelen veriyi "veriAlani" adlı div içine yerleştiriyoruz
+                        // $('#Temprature').text(response);
+                        alert("Light is successfully closing!");
+
+                    },
+                    error: function () {
+                        console.error('Veri çekme hatası!');
+                    }
+                });
+            });
+
+            // Belirli aralıklarla veri çekmek için setInterval kullanıyoruz
+            setInterval(function () {
+                $.ajax({
+                    url: '/Home/Temprature',
+                    type: 'GET',
+                    success: function (response) {
+                        console.log("response : ", response)
+                        // API'den gelen veriyi "veriAlani" adlı div içine yerleştiriyoruz
+                        $('#Temprature').text(response);
+                    },
+                    error: function () {
+                        console.error('Veri çekme hatası!');
+                    }
+                });
+            }, 10000); // Her x saniyede bir veri çek
+            setInterval(function () {
+                $.ajax({
+                    url: '/Home/Moisture',
+                    type: 'GET',
+                    success: function (response) {
+                        console.log("response : ", response)
+                        // API'den gelen veriyi "veriAlani" adlı div içine yerleştiriyoruz
+                        $('#Moisture').text(response);
+                    },
+                    error: function () {
+                        console.error('Veri çekme hatası!');
+                    }
+                });
+            }, 10000); // Her x saniyede bir veri çek
+            setInterval(function () {
+                $.ajax({
+                    url: '/Home/Rain',
+                    type: 'GET',
+                    success: function (response) {
+                        console.log("response : ", response)
+                        // API'den gelen veriyi "veriAlani" adlı div içine yerleştiriyoruz
+                        $('#Rain').text(response);
+                    },
+                    error: function () {
+                        console.error('Veri çekme hatası!');
+                    }
+                });
+            }, 10000); // Her x saniyede bir veri çek
+            setInterval(function () {
+                $.ajax({
+                    url: '/Home/Light',
+                    type: 'GET',
+                    success: function (response) {
+                        console.log("response : ", response)
+                        // API'den gelen veriyi "veriAlani" adlı div içine yerleştiriyoruz
+                        $('#Light').text(response);
+                    },
+                    error: function () {
+                        console.error('Veri çekme hatası!');
+                    }
+                });
+            }, 10000); // Her x saniyede bir veri çek
+        });
+    </script>
+</body>
+</html>
+
